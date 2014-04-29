@@ -9,7 +9,8 @@ import java.util.List;
  */
 public interface UserRepository {
     int insertUser(User user);
-    User findUser(User user);
+    User findById(int id);
+    User findByEmail(String email);
     int updateUser(User user);
     int deleteUser(User user);
     int deleteBatch(final List<User> users);

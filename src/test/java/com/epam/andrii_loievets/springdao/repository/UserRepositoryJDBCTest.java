@@ -53,24 +53,52 @@ public class UserRepositoryJDBCTest extends DAOTestsTemplate {
     public void insertUser_ValidUser_1RowInserted() {
         assertEquals(1, userRepository.insertUser(user));
     }
-
+    
     /**
-     * Test of findUser method, of class UserRepositoryJDBC.
+     * Test of insertUser method, of class UserRepositoryJDBC.
      */
     @Test
-    public void findUser_ExistingUser_UserFound() {
+    public void insertUser_DuplicateUser_0RowInserted() {
         userRepository.insertUser(user);
-        User found = userRepository.findUser(user);
+        assertEquals(0, userRepository.insertUser(user));
+    }
+    
+    /**
+     * Test of findById method, of class UserRepositoryJDBC.
+     */
+    @Test
+    public void findById_ExistingUser_UserFound() {
+        userRepository.insertUser(user);
+        User found = userRepository.findById(user.getId());
+        
+        assertEquals(user.getId(), found.getId());
+    }
+    
+    /**
+     * Test of findByEmail method, of class UserRepositoryJDBC.
+     */
+    @Test
+    public void findById_InvalidUser_ReturnsNull() {
+        assertNull(userRepository.findById(user.getId()));
+    }
+
+    /**
+     * Test of findByEmail method, of class UserRepositoryJDBC.
+     */
+    @Test
+    public void findByEmail_ExistingUser_UserFound() {
+        userRepository.insertUser(user);
+        User found = userRepository.findByEmail(user.getEmail());
         
         assertEquals(user.getEmail(), found.getEmail());
     }
     
     /**
-     * Test of findUser method, of class UserRepositoryJDBC.
+     * Test of findByEmail method, of class UserRepositoryJDBC.
      */
     @Test
-    public void findUser_InvalidUser_ReturnsNull() {
-        assertNull(userRepository.findUser(user));
+    public void findByEmail_InvalidUser_ReturnsNull() {
+        assertNull(userRepository.findByEmail(user.getEmail()));
     }
     
     /**
